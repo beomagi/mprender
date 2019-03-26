@@ -113,7 +113,13 @@ def mprenderbyfunc(mainwide, mainhigh, colorfunction,xoffset=0,yoffset=0,procs=2
     return mainimg
 
 def main():
-    mprenderbyfunc(1600,1600,colorfunc1,procs=2,perprocsplit=1).save("./test.png")
+    proccount=2
+    procsplit=2
+    if "-p" in sys.argv:
+        proccount=int(sys.argv[sys.argv.index("-p")+1])
+    if "-s" in sys.argv:
+        procsplit=int(sys.argv[sys.argv.index("-s")+1])
+    mprenderbyfunc(1600,1600,colorfunc1,procs=proccount,perprocsplit=procsplit).save("./test.png")
 
 if __name__ == '__main__':
     main()
