@@ -76,7 +76,6 @@ def mprenderbyfunc(mainwide, mainhigh, colorfunction,xoffset=0,yoffset=0,procs=2
             suboffyplus1=round((mainhigh*(spy+1))/splity)
             subwide=suboffxplus1-suboffx
             subhigh=suboffyplus1-suboffy
-            childq=smp.SimpleQueue()
             processargs.append((subwide,subhigh,suboffx+xoffset,suboffy+yoffset,colorfunction))
     renderpool=smp.Pool(procs)
     imgreturn=renderpool.map(renderimg,processargs)
