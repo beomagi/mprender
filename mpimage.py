@@ -33,6 +33,11 @@ def colorfunc2(ix,iy):
         vr=(255/vb)*vr
         vg=(255/vb)*vg
         vb=255
+    mul=(1+4050)/(1+((mx-45)*(mx-45)+(my-45)*(my-45)))
+    vr=(mul*dr)
+    vg=(mul*dg)
+    vb=(mul*db)
+
     return(int(vr),int(vg),int(vb))
 
 
@@ -90,7 +95,7 @@ def main():
         proccount=int(sys.argv[sys.argv.index("-p")+1])
     if "-s" in sys.argv:
         procsplit=int(sys.argv[sys.argv.index("-s")+1])
-    mprenderbyfunc(1600,1600,colorfunc1,procs=proccount,perprocsplit=procsplit).save("./test.png")
+    mprenderbyfunc(600,600,colorfunc2,procs=proccount,perprocsplit=procsplit).save("./test.png")
 
 if __name__ == '__main__':
     main()
