@@ -40,6 +40,35 @@ def colorfunc2(ix,iy):
 
     return(int(vr),int(vg),int(vb))
 
+def colorfunc3(ix,iy):
+    zoom=200
+    tx=ix/zoom
+    ty=iy/zoom
+    xtmp=ytmp=xtmp2=iters=0
+    maxiters=1000
+    while ((iters<maxiters) and (xtmp*xtmp+ytmp*ytmp < 4)):
+        xtmp2=xtmp*xtmp-ytmp*ytmp+tx
+        ytmp=2*xtmp*ytmp+ty
+        xtmp=xtmp2
+        iters+=1;
+    log2=math.log(2)
+    if (iters<maxiters): #smoother transitions
+        zn=math.sqrt(xtmp*xtmp+ytmp*ytmp)
+        zl=math.log(math.log(zn)/log2)/log2
+        iters+=1-zl
+    if iters==maxiters: #inerbulb shading
+        dlg=xtmp*xtmp+ytmp*ytmp
+        if dlg>0:
+            iters=math.log((1/(xtmp*xtmp+ytmp*ytmp)))/(log2);
+    contrast=0.15
+    cycle=(maxiters)/(3.14159265359*100);
+    cr=128+127*math.sin(0.00+iters/(cycle*1.5000))
+    cg=128+127*math.sin(1.57+iters/(cycle*1.6000))
+    cb=128+127*math.sin(3.14+iters/(cycle*1.5666))
+    return(int(cr),int(cg),int(cb))
+
+
+
 
 
 #def renderimg(width, height, offx, offy, rgbfunction):
@@ -90,12 +119,12 @@ def mprenderbyfunc(mainwide, mainhigh, colorfunction,xoffset=0,yoffset=0,procs=2
 
 def main():
     proccount=2
-    procsplit=2
+    procsplit=5
     if "-p" in sys.argv:
         proccount=int(sys.argv[sys.argv.index("-p")+1])
     if "-s" in sys.argv:
         procsplit=int(sys.argv[sys.argv.index("-s")+1])
-    mprenderbyfunc(600,600,colorfunc2,procs=proccount,perprocsplit=procsplit).save("./test.png")
+    mprenderbyfunc(600,600,colorfunc3,xoffset=-450,yoffset=-300,procs=proccount,perprocsplit=procsplit).save("./test.png")
 
 if __name__ == '__main__':
     main()
