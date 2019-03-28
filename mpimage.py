@@ -48,7 +48,7 @@ def renderimg(params):
     pimg = img.load()
     for yy in range(height):
         for xx in range(width):
-            pimg[xx,yy]=rgbfunction(xx+offx,yy+offy)
+            pimg[xx,yy]=rgbfunction(float(xx+offx),float(yy+offy))
     endtime=time.time()
     print("finished subrender..."+str((width, height, offx, offy, rgbfunction.__name__))+"  "+str(endtime-inittime)+"s")
     return((offx,offy,img))
@@ -76,7 +76,7 @@ def mprenderbyfunc(mainwide, mainhigh, colorfunction,xoffset=0,yoffset=0,procs=2
             suboffyplus1=round((mainhigh*(spy+1))/splity)
             subwide=suboffxplus1-suboffx
             subhigh=suboffyplus1-suboffy
-            processargs.append((subwide,subhigh,suboffx+xoffset,suboffy+yoffset,colorfunction))
+            processargs.append((int(subwide),int(subhigh),int(suboffx+xoffset),int(suboffy+yoffset),colorfunction))
     renderpool=smp.Pool(procs)
     imgreturn=renderpool.map(renderimg,processargs)
 
