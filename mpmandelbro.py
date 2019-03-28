@@ -2,6 +2,7 @@
 from PIL import Image
 import mpimage
 import math
+import sys
 
 def juliafunc(ix,iy):
     zoom=1
@@ -64,6 +65,16 @@ def mandelfunc(ix,iy):
 
 
 
+def main():
+    proccount=2
+    procsplit=5
+    if "-p" in sys.argv:
+        proccount=int(sys.argv[sys.argv.index("-p")+1])
+    if "-s" in sys.argv:
+        procsplit=int(sys.argv[sys.argv.index("-s")+1])
 
-mpimage.mprenderbyfunc(800,600,juliafunc,xoffset=-400,yoffset=-300,procs=2,perprocsplit=4).save("functest.png")
-#mpimage.mprenderbyfunc(800,600,mandelfunc,xoffset=-400,yoffset=-300,procs=2,perprocsplit=4).save("functest.png")
+    #mpimage.mprenderbyfunc(800,600,juliafunc,xoffset=-400,yoffset=-300,procs=proccount,perprocsplit=procsplit).save("functest.png")
+    mpimage.mprenderbyfunc(800,600,mandelfunc,xoffset=-400,yoffset=-300,procs=proccount,perprocsplit=procsplit).save("functest.png")
+
+
+main()
