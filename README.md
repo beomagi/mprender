@@ -15,3 +15,4 @@ e.g.
 mpimage.mprenderbyfunc(800,600,simpfunc,procs=2,perprocsplit=4).save("functest.png")
 
 see textfunc.py as an example
+
